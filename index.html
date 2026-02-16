@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Lebronaron</title>
+
+    <!-- all css until ~ line 397 -->
+    <style>
+        :root {
+            --background: #0b0f16;
+            --text: #f4f6fb;
+            --muted: rgba(244, 246, 251, 0.72);
+
+            --card: rgba(255, 255, 255, 0.06);
+
+            --stroke: rgba(255, 255, 255, 0.12);
+            --stroke-strong: rgba(255, 255, 255, 0.18);
+
+            --shadow: 0 18px 55px rgba(0, 0, 0, 0.45);
+            --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.28);
+
+            --radius: 18px;
+
+            --padding: 18px;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+            background: var(--background);
+            color: var(--text);
+        }
+
+        #background {
+            min-height: 100vh;
+            background-image: url("https://the-talks.com/wp-content/uploads/2011/09/Lebron-James-01.jpg");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            position: relative;
+        }
+
+        #overlay {
+            min-height: 100vh;
+            padding: 28px 18px;
+            background:
+                radial-gradient(900px 500px at 25% 15%,
+                    rgba(255, 204, 102, 0.22),
+                    transparent 60%),
+                radial-gradient(700px 420px at 80% 20%,
+                    rgba(124, 240, 197, 0.16),
+                    transparent 60%),
+                linear-gradient(rgba(8, 10, 15, 0.78),
+                    rgba(8, 10, 15, 0.86));
+            backdrop-filter: blur(6px);
+        }
+
+        .container {
+            max-width: 1120px;
+            margin: 0 auto;
+        }
+
+        .topbar {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+
+        .mainText h1 {
+            margin: 0;
+            font-size: 22px;
+            letter-spacing: 0.2px;
+        }
+
+        .mainText p {
+            margin: 6px 0 0 0;
+            color: var(--muted);
+            font-size: 13.5px;
+            line-height: 1.35;
+        }
+
+        .pillRow {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: flex-end;
+        }
+
+        .pill {
+            display: inline-flex;
+            gap: 8px;
+            align-items: center;
+            padding: 8px 12px;
+            border-radius: 999px;
+            background: var(--card);
+            border: 1px solid var(--stroke);
+            box-shadow: var(--shadow-soft);
+            color: var(--text);
+            font-size: 13px;
+            line-height: 1;
+            user-select: none;
+        }
+
+        .pill strong {
+            font-weight: 700;
+            color: var(--text);
+        }
+
+        .panel {
+            background: var(--card);
+            border: 1px solid var(--stroke);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+
+        .panelHeader {
+            padding: 14px var(--padding);
+            background: rgba(255, 255, 255, 0.05);
+            border-bottom: 1px solid var(--stroke);
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            gap: 10px;
+        }
+
+        .panelHeader .title {
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: 0.2px;
+        }
+
+        .panelHeader .hint {
+            color: var(--muted);
+            font-size: 12.5px;
+        }
+
+        .panelBody {
+            padding: var(--padding);
+        }
+
+        #gameScreenLayout {
+            display: grid;
+            grid-template-columns: 1.8fr 1.2fr 1.4fr;
+            gap: 18px;
+            align-items: start;
+        }
+
+        @media (max-width: 980px) {
+            #gameScreenLayout {
+                grid-template-columns: 1fr;
+            }
+
+            .pillRow {
+                justify-content: flex-start;
+            }
+
+            .topbar {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+
+        .btn {
+            appearance: none;
+            border: 1px solid var(--stroke-strong);
+            background: rgba(255, 255, 255, 0.08);
+            color: var(--text);
+            border-radius: 999px;
+            padding: 11px 14px;
+            font-weight: 700;
+            letter-spacing: 0.3px;
+            cursor: pointer;
+            transition: transform 0.08s ease, background 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+            box-shadow: var(--shadow-soft);
+        }
+
+        .btn:hover {
+            background: rgba(255, 255, 255, 0.12);
+            border-color: rgba(255, 255, 255, 0.26);
+        }
+
+        .btn:active {
+            transform: translateY(1px);
+        }
+
+        .yellowBtn {
+            background: linear-gradient(135deg,
+                    rgba(255, 204, 102, 0.95),
+                    rgba(255, 204, 102, 0.7));
+            border-color: rgba(255, 204, 102, 0.65);
+            color: rgba(10, 12, 16, 0.92);
+        }
+
+        .yellowBtn:hover {
+            background: linear-gradient(135deg,
+                    rgba(255, 204, 102, 1),
+                    rgba(255, 204, 102, 0.78));
+        }
+
+        .longBtn {
+            width: 100%;
+            padding: 12px 16px;
+        }
+
+        .fieldLabel {
+            display: block;
+            font-size: 12.5px;
+            color: var(--muted);
+            margin: 0 0 8px 2px;
+        }
+
+        .searchRow {
+            display: grid;
+            grid-template-columns: 1fr 112px;
+            gap: 10px;
+            position: relative;
+        }
+
+        #playerInput {
+            height: 44px;
+            width: 100%;
+            border-radius: 999px;
+            border: 1px solid var(--stroke-strong);
+            background: rgba(255, 255, 255, 0.06);
+            color: var(--text);
+            padding: 0 14px;
+            outline: none;
+            box-shadow: var(--shadow-soft);
+        }
+
+        #playerInput::placeholder {
+            color: rgba(244, 246, 251, 0.55);
+        }
+
+        #playerInput:focus {
+            border-color: rgba(255, 204, 102, 0.7);
+            box-shadow: 0 0 0 4px rgba(255, 204, 102, 0.18);
+        }
+
+        #results {
+            list-style: none;
+            padding: 6px;
+            margin: 8px 0 0 0;
+            position: absolute;
+            left: 0;
+            right: 122px;
+            top: 36px;
+            background: rgba(10, 12, 16, 0.88);
+            border: 1px solid var(--stroke);
+            border-radius: 14px;
+            max-height: 260px;
+            overflow-y: auto;
+            box-shadow: var(--shadow);
+            z-index: 50;
+            backdrop-filter: blur(8px);
+        }
+
+        #results:empty {
+            display: none;
+        }
+
+        #results li {
+            padding: 10px 10px;
+            border-radius: 10px;
+            cursor: pointer;
+            color: var(--text);
+        }
+
+        #results li:hover {
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        #statusLine {
+            margin-top: 12px;
+            color: var(--muted);
+            font-size: 13px;
+            min-height: 18px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: rgba(0, 0, 0, 0.22);
+            border: 1px solid var(--stroke);
+            border-radius: 14px;
+            overflow: hidden;
+        }
+
+        th,
+        td {
+            padding: 10px 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            font-size: 13.5px;
+        }
+
+        th {
+            text-align: left;
+            color: rgba(244, 246, 251, 0.82);
+            background: rgba(255, 255, 255, 0.05);
+            font-weight: 700;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        .ppg-row {
+            cursor: pointer;
+        }
+
+        .ppg-row:hover {
+            background: rgba(255, 255, 255, 0.06);
+        }
+
+        .ppg-row.used {
+            opacity: 0.45;
+            cursor: not-allowed;
+        }
+
+        #picks {
+            margin: 0;
+            padding-left: 18px;
+            color: rgba(244, 246, 251, 0.92);
+        }
+
+        #picks li {
+            margin: 8px 0;
+            color: rgba(244, 246, 251, 0.9);
+            font-size: 13.5px;
+        }
+
+        #endMessage {
+            margin-top: 14px;
+            padding: 10px 12px;
+            border-radius: 14px;
+            border: 1px solid rgba(255, 204, 102, 0.28);
+            background: rgba(255, 204, 102, 0.1);
+            color: rgba(255, 204, 102, 0.95);
+            font-weight: 800;
+            display: none;
+        }
+
+        #startScreen {
+            display: grid;
+            place-items: center;
+            min-height: calc(100vh - 56px);
+        }
+
+        .startPill {
+            width: min(720px, 100%);
+            padding: 26px;
+            border-radius: 22px;
+            border: 1px solid var(--stroke);
+            background: rgba(255, 255, 255, 0.06);
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+
+        .startPill h1 {
+            margin: 0 0 8px 0;
+            font-size: 30px;
+            letter-spacing: 0.2px;
+        }
+
+        .startPill p {
+            margin: 0 0 8px 0;
+            color: var(--muted);
+            line-height: 1.45;
+        }
+
+        #gameScreen {
+            display: none;
+        }
+
+        .btn:focus {
+            outline: none;
+            box-shadow: 0 0 0 4px rgba(124, 240, 197, 0.18), var(--shadow-soft);
+            border-color: rgba(124, 240, 197, 0.5);
+        }
+
+        .teamLogo {
+            display: none;
+            justify-content: center;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="background">
+        <div id="overlay">
+            <div class="container">
+                <div id="startScreen">
+                    <div class="startPill">
+                        <h1>Lebronaron</h1>
+                        <p>
+                            Draft <strong>5</strong> players (choose a season), and get your
+                            total PPG as close to the target as possible.
+                        </p>
+                        <button id="playBtn" class="btn yellowBtn longBtn">PLAY</button>
+                    </div>
+                </div>
+
+                <div id="gameScreen">
+                    <div class="topbar">
+                        <div class="mainText">
+                            <h1>Lebronaron</h1>
+                            <p>
+                                Step 1: Search a player • Step 2: Click a season row to lock your pick • Step 3: Lock
+                                each pick to one team for added difficulty! (optional)
+                            </p>
+                        </div>
+
+                        <div class="pillRow" aria-label="Game stats">
+                            <div class="pill">target <strong id="targetNum">-</strong></div>
+                            <div class="pill">total <strong id="totalNum">0</strong></div>
+                            <div class="pill">
+                                picks left <strong id="remainingNum">5</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="gameScreenLayout">
+                        <div class="panel">
+                            <div class="panelHeader">
+                                <div class="title">Player search</div>
+                                <div class="hint">Begin typing, then select player from dropdown</div>
+                            </div>
+
+                            <div class="panelBody">
+
+                                <div class="searchRow">
+                                    <input id="playerInput" placeholder="enter a player" autocomplete="off" />
+                                    <button id="goBtn" class="btn yellowBtn">GO</button>
+                                    <ul id="results"></ul>
+                                </div>
+
+                                <div id="statusLine"></div>
+                            </div>
+
+                            <div class="panelHeader">
+                                <div class="title">Choose a season</div>
+                                <div class="hint" id="playerHeader">Search a player to begin</div>
+                            </div>
+
+                            <div class="panelBody">
+                                <div id="playerTable"></div>
+                            </div>
+                        </div>
+
+                        <div class="panel">
+                            <div class="panelHeader">
+                                <div class="title">Your picks</div>
+                                <div class="hint">Locked picks show up here</div>
+                            </div>
+
+                            <div class="panelBody">
+                                <ol id="picks"></ol>
+                                <div id="endMessage"></div>
+                            </div>
+                        </div>
+
+                        <div class="panel">
+                            <div class="panelHeader">
+                                <div class="title">Team Lock</div>
+                                <div class="hint">Click the button to randomise team</div>
+                            </div>
+
+                            <div class="panelBody">
+                                <!-- need to set img dimensions as exactly ONE of them differs in size -->
+                                <img class="teamLogo" id="teamLogo" height="252.17" width="252.17">
+                                <button id="teamBtn" class="btn yellowBtn longBtn">RANDOMISE</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <script>
+                    let results = [];
+                    let selected = null;
+                    let timer = null;
+
+                    let target = 0;
+                    let total = 0;
+                    let remaining = 5;
+                    let gameOver = false;
+
+                    // caching DOM references
+                    const startScreen = document.getElementById("startScreen");
+                    const gameScreen = document.getElementById("gameScreen");
+                    const playBtn = document.getElementById("playBtn");
+
+                    const input = document.getElementById("playerInput");
+                    const list = document.getElementById("results");
+                    const goBtn = document.getElementById("goBtn");
+                    const teamBtn = document.getElementById("teamBtn");
+                    const teamLogo = document.getElementById("teamLogo");
+
+                    const statusLine = document.getElementById("statusLine");
+                    const playerHeader = document.getElementById("playerHeader");
+                    const playerTable = document.getElementById("playerTable");
+
+                    const targetNum = document.getElementById("targetNum");
+                    const totalNum = document.getElementById("totalNum");
+                    const remainingNum = document.getElementById("remainingNum");
+                    const picks = document.getElementById("picks");
+                    const endMessage = document.getElementById("endMessage");
+
+                    function getRandInt() {
+                        return Math.floor(Math.random() * 51) + 75;
+                    }
+
+                    function getRandTeamURL() {
+                        return "https://cdn.nba.com/logos/nba/16106127" + (Math.floor(Math.random() * 30) + 37) + "/global/L/logo.svg";
+                    }
+
+                    /**
+                     * @description resets all game values to the base
+                    */
+                    function startGame() {
+                        target = getRandInt();
+                        total = 0;
+                        remaining = 5;
+                        gameOver = false;
+
+                        results = [];
+                        selected = null;
+
+                        input.value = "";
+                        list.innerHTML = "";
+                        playerHeader.textContent = "Search a player to begin";
+                        playerTable.innerHTML = "";
+                        picks.innerHTML = "";
+                        endMessage.style.display = "none";
+                        endMessage.textContent = "";
+
+                        targetNum.textContent = String(target);
+                        totalNum.textContent = String(total);
+                        remainingNum.textContent = String(remaining);
+                        statusLine.textContent = "";
+                    }
+
+                    /**
+                     * @description sets gameOver flag stopping further actions and prints end of game message
+                    */
+                    function finishGame() {
+                        gameOver = true;
+                        endMessage.textContent = "Game over. diff = " + (Math.abs(target - total)).toFixed(1);
+                        endMessage.style.display = "block";
+                    }
+
+                    /**
+                     * @description clears previous list and populates the dropdown list
+                     * @params {String[]}
+                    */
+                    function render(items) {
+                        list.innerHTML = "";
+                        results = items;
+                        selected = null;
+
+                        items.forEach(function (item) {
+                            const li = document.createElement("li");
+                            li.textContent = item.text;
+
+                            li.addEventListener("click", function () {
+                                selected = item;
+                                input.value = item.text;
+                                list.innerHTML = "";
+                                statusLine.textContent = "Selected: " + item.text + " — press GO";
+                            });
+
+                            list.appendChild(li);
+                        });
+                    }
+
+                    /**
+                     * @description searches tthe backend for players matching the query
+                     * @params {String} query
+                     * @returns {Promise<Array>}
+                    */
+                    async function searchPlayers(query) {
+                        const res = await fetch("/api/search?q=" + encodeURIComponent(query));
+                        return await res.json();
+                    }
+
+                    /**
+                     * @description lloads season data for the relevant player
+                     * @params {String} path
+                     * @returns {Promise<Object>}
+                    */
+                    async function loadPlayer(path) {
+                        statusLine.textContent = "Loading player…";
+                        playerTable.innerHTML = "";
+
+                        const res = await fetch("/api/player?path=" + encodeURIComponent(path), {
+                            cache: "no-store"  // makes sure no out of date data
+                        });
+                        const data = await res.json();
+                        return data;
+                    }
+
+                    /**
+                     * @description renders the table of season : pts for a given player
+                     * contains the relevant event listeners for selecting a player's season
+                     * @params {String} playerName, {any[]} ppg
+                    */
+                    function renderPlayerTable(playerName, ppg) {
+                        playerHeader.textContent =
+                            "Click a season row to lock a pick (" + remaining + " left)";
+
+                        const rows = ppg.map((r, i) => {
+                            const pts = parseFloat(r.pts);
+                            const safePts = Number.isFinite(pts) ? pts.toFixed(1) : r.pts;
+
+                            return `
+                        <tr class="ppg-row" data-index="${i}" data-season="${r.season}" data-pts="${safePts}">
+                            <td>${r.season}</td>
+                            <td>${safePts}</td>
+                        </tr>
+                    `;
+                        })
+                            .join("");
+
+                        playerTable.innerHTML = `
+                    <div style="margin-bottom: 10px; font-weight: 800; letter-spacing: 0.2px;">
+                        ${playerName}
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Season</th>
+                                <th>PPG</th>
+                            </tr>
+                        </thead>
+                        <tbody>${rows}</tbody>
+                    </table>
+                `;
+
+                        playerTable.querySelector("table").addEventListener("click", (e) => {
+                            const row = e.target.closest(".ppg-row");
+                            if (!row) return;
+                            if (gameOver) return;
+                            if (row.classList.contains("used")) return;
+                            if (remaining <= 0) return;
+
+                            const season = row.dataset.season;
+                            const pts = parseFloat(row.dataset.pts);
+
+                            if (!Number.isFinite(pts)) {
+                                statusLine.textContent = "That season has no PPG.";
+                                return;
+                            }
+
+                            row.classList.add("used");
+                            remaining -= 1;
+                            total = parseFloat((total + pts).toFixed(1));
+
+                            remainingNum.textContent = String(remaining);
+                            totalNum.textContent = String(total);
+
+                            const li = document.createElement("li");
+                            li.textContent = playerName + " • " + season + " • " + pts.toFixed(1) + " ppg";
+                            picks.appendChild(li);
+
+                            statusLine.textContent = "Picked " + season + " (" + pts.toFixed(1) + "). Total: " + total.toFixed(1);
+
+                            if (remaining === 0) {
+                                finishGame();
+                            } else {
+                                playerHeader.textContent = "Click a season row to lock a pick (" + remaining + " left)";
+                            }
+                        });
+                    }
+
+                    // event listeners
+                    playBtn.addEventListener("click", () => {
+                        startScreen.style.display = "none";
+                        gameScreen.style.display = "block";
+                        startGame();
+                        input.focus();
+                    });
+
+                    teamBtn.addEventListener("click", () => {
+                        teamLogo.src = getRandTeamURL();
+                        teamLogo.style.display = "block";
+                    });
+
+                    input.addEventListener("input", () => {
+                        if (gameOver) return;
+
+                        const i = input.value.trim();
+                        clearTimeout(timer);
+
+                        timer = setTimeout(async () => {
+                            if (i.length < 2) return render([]);
+                            const items = await searchPlayers(i);
+                            return render(items);
+                        }, 250);
+                    });
+
+                    input.addEventListener("keydown", (e) => {
+                        if (e.key === "Enter") goBtn.click();
+                        if (e.key === "Escape") list.innerHTML = "";
+                    });
+
+                    goBtn.addEventListener("click", async () => {
+                        if (gameOver) return;
+
+                        if (!selected) {
+                            statusLine.textContent = "Pick a player from the dropdown first.";
+                            return;
+                        }
+
+                        if (remaining <= 0) {
+                            finishGame();
+                            return;
+                        }
+
+                        const data = await loadPlayer(selected.path);
+
+                        if (data.error) {
+                            statusLine.textContent = data.error;
+                            return;
+                        }
+
+                        statusLine.textContent = "Loaded: " + selected.text;
+                        renderPlayerTable(selected.text, data.ppg);
+                    });
+                </script>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

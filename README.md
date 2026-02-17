@@ -3,12 +3,12 @@
 A web app that lets a player 'draft' 5 players(/seasons) to try and get as close to a randomly generated points target. Built using HTML, CSS, JS, node, express, cheerio and puppeteer. Uses live data from basketball-reference.com.
 
 Features:
-Can search for any player as long as they exist on basketball-reference.com
-> Includes autocomplete and a cached player index
-Can view and select individual season statistics for players going back to the 1948-49 season
-Randomly generated target each game
-Optional 'team lock' which is implemented through a logo randomiser to increase difficulty
-Clean and responsive UI
+- Can search for any player as long as they exist on basketball-reference.com
+- Includes autocomplete and a cached player index
+- Can view and select individual season statistics for players going back to the 1948-49 season
+- Randomly generated target each game
+- Optional 'team lock' which is implemented through a logo randomiser to increase difficulty
+- Clean and responsive UI
 
 Tech stack:
 Frontend - HTML, CSS, JS

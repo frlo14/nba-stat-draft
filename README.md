@@ -31,11 +31,11 @@ From there I wrote the basic functionality for the frontend, just focusing on pr
 Finally, I changed the UI from the basic HTML implementation to my own and added finishing touches and noncrucial functionality to give my project a more complete feel.
 
 Architecture overview:
-On startup the server attempts to load the cached player index if possible, building it if it does not exist. The puppeteer browser is also opened
-When more than 2 characters have been typed into the input box the frontend queries /api/search for player suggestions
-when a player is selected the frontend queries /api/player
-the server retrieves the season ppg data by scraping the player's page
-the frontend handles all user level interaction (total score, picks remaining etc.)
+1) On startup the server attempts to load the cached player index if possible, building it if it does not exist. The puppeteer browser is also opened
+2) When more than 2 characters have been typed into the input box the frontend queries /api/search for player suggestions
+3) When a player is selected the frontend queries /api/player
+4) The server retrieves the season ppg data by scraping the player's page
+5) The frontend handles all user level interaction (total score, picks remaining etc.)
 
 Development decisions:
 Caching player index:
